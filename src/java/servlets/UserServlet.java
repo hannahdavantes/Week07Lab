@@ -90,8 +90,9 @@ public class UserServlet extends HttpServlet {
     String fname = request.getParameter("fname");
     String lname = request.getParameter("lname");
     String password = request.getParameter("password");
-    int roleID = Integer.valueOf(request.getParameter("roleID"));
-
+    int roleid = Integer.valueOf(request.getParameter("roleid"));
+    
+    
     String action = request.getParameter("action");
     action = action == null ? "" : action;
 
@@ -100,13 +101,13 @@ public class UserServlet extends HttpServlet {
         case "add":
           if (checkIsValid(new String[]{email, fname, lname, password})) {
             //Role r = 
-            us.insert(email, fname, lname, password, roleID);
+            us.insert(email, fname, lname, password, roleid);
           } else {
             request.setAttribute("error", "All fields are required");
           }
         case "edit":
           if (checkIsValid(new String[]{email, fname, lname})) {
-            us.update(email, fname, lname, password, roleID);
+            us.update(email, fname, lname, password, roleid);
           } else {
             request.setAttribute("error", "All fields are required");
           }

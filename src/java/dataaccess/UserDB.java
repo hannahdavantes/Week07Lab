@@ -28,7 +28,7 @@ public class UserDB {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            String preparedQuery = "INSERT INTO User_Table (email, fname, lname, password) VALUES (?, ?, ?, ?, ?)";
+            String preparedQuery = "INSERT INTO User_Table (email, fname, lname, password, role) VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
 

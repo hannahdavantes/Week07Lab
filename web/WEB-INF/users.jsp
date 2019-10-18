@@ -63,8 +63,7 @@
                         />
                     <select
                         class="input-dark"
-                        name="roleID"
-                        required
+                        name="roleid"
                         >
                         <option value="1">System Admin</option>
                         <option value="2">Regular User</option>
