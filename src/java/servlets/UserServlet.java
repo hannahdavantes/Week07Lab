@@ -95,12 +95,12 @@ public class UserServlet extends HttpServlet {
     
     String action = request.getParameter("action");
     action = action == null ? "" : action;
-
+   
+    
     try {
       switch (action) {
         case "add":
           if (checkIsValid(new String[]{email, fname, lname, password})) {
-            //Role r = 
             us.insert(email, fname, lname, password, roleid);
           } else {
             request.setAttribute("error", "All fields are required");

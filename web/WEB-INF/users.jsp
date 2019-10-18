@@ -152,6 +152,14 @@
                             value="${user.password}"
                             placeholder="Password"
                             />
+                        <select
+                            class="input-dark"
+                            name="roleid"
+                            >
+                            <option value="1">System Admin</option>
+                            <option value="2">Regular User</option>
+                            <option value="3">Company Admin</option>
+                        </select>
                         <input type="hidden" name="action" value="edit" />
                         <input class="mb-0 input-primary" type="submit" value="Save"/>
                         <a href="/users?action=clearEdit">

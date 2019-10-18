@@ -9,7 +9,8 @@ import models.User;
 import java.util.List;
 import models.Role;
 
-public class UserDB {
+public class UserDB
+  {
 
     /**
      * This method inserts user elements and return the number of rows affected.
@@ -19,13 +20,15 @@ public class UserDB {
      * @return rows rows
      * @throws java.sql.SQLException
      */
-    public int insert(User user) throws SQLException {
+    public int insert(User user) throws SQLException
+      {
 
         ConnectionPool connectionPool = null;
         Connection connection = null;
 
         int rows = 0;
-        try {
+        try
+          {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             String preparedQuery = "INSERT INTO User_Table (email, fname, lname, password, role) VALUES (?, ?, ?, ?, ?)";
@@ -41,10 +44,11 @@ public class UserDB {
             rows = ps.executeUpdate();
             ps.close();
             return rows;
-        } finally {
+          } finally
+          {
             connectionPool.freeConnection(connection);
-        }
-    }
+          }
+      }
 
     /**
      * This method update the User record.
@@ -53,10 +57,12 @@ public class UserDB {
      * @return successCount Number of records updated
      * @throws java.sql.SQLException
      */
-    public int update(User user) throws SQLException {
+    public int update(User user) throws SQLException
+      {
         ConnectionPool connectionPool = null;
         Connection connection = null;
-        try {
+        try
+          {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
 
@@ -67,17 +73,18 @@ public class UserDB {
             statement.setBoolean(1, user.isActive());
             statement.setString(2, user.getFname());
             statement.setString(3, user.getLname());
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPassword());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getEmail());
 
             successCount = statement.executeUpdate();
             statement.close();
             return successCount;
-        } finally {
+          } finally
+          {
             connectionPool.freeConnection(connection);
-        }
+          }
 
-    }
+      }
 
     /**
      * This method queries the database for all users. Every user is put into an
@@ -86,10 +93,12 @@ public class UserDB {
      * @return ArrayList users - the list of users retrieved from the database.
      * @throws SQLException
      */
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll() throws SQLException
+      {
         ConnectionPool connectionPool = null;
         Connection connection = null;
-        try {
+        try
+          {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             User user;
@@ -99,63 +108,68 @@ public class UserDB {
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+              {
                 boolean active = rs.getBoolean(1);
                 String userEmail = rs.getString(2);
                 String fname = rs.getString(3);
                 String lname = rs.getString(4);
                 String password = rs.getString(5);
-                
+
                 int roleID = rs.getInt(6);
                 RoleDB roleDB = new RoleDB();
                 Role role = roleDB.getRole(roleID);
-                        
+
                 user = new User(userEmail, fname, lname, password, role);
                 user.setActive(active);
                 users.add(user);
-            }
+              }
 
             return users;
-        } finally {
+          } finally
+          {
             connectionPool.freeConnection(connection);
-        }
-    }
-    
+          }
+      }
+
     public List<User> getActive() throws SQLException
       {
-         ConnectionPool connectionPool = null;
+        ConnectionPool connectionPool = null;
         Connection connection = null;
-        try {
+        try
+          {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             User user;
             ArrayList<User> users = new ArrayList<>();
 
-            String preparedQuery = "SELECT active, email, fname, lname, password, role FROM user_table where active=true";
+            String preparedQuery = "SELECT active, email, fname, lname, password, role FROM user_table where active is true";
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+              {
                 boolean active = rs.getBoolean(1);
                 String userEmail = rs.getString(2);
                 String fname = rs.getString(3);
                 String lname = rs.getString(4);
                 String password = rs.getString(5);
-                
+
                 int roleID = rs.getInt(6);
                 RoleDB roleDB = new RoleDB();
                 Role role = roleDB.getRole(roleID);
-                        
+
                 user = new User(userEmail, fname, lname, password, role);
-                user.setActive(active);
                 users.add(user);
-            }
+
+              }
 
             return users;
-        } finally {
+          } finally
+          {
             connectionPool.freeConnection(connection);
-        }
-        
+          }
+
       }
 
     /**
@@ -166,11 +180,13 @@ public class UserDB {
      * @return User dude - the user retrieved from the database.
      * @throws SQLException
      */
-    public User getUser(String email) throws SQLException {
+    public User getUser(String email) throws SQLException
+      {
 
         ConnectionPool connectionPool = null;
         Connection connection = null;
-        try {
+        try
+          {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
 
@@ -180,27 +196,28 @@ public class UserDB {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+              {
                 boolean active = rs.getBoolean(1);
                 String userEmail = rs.getString(2);
                 String fname = rs.getString(3);
                 String lname = rs.getString(4);
                 String password = rs.getString(5);
                 int roleID = rs.getInt(6);
-                
+
                 RoleDB roleDB = new RoleDB();
                 Role role = roleDB.getRole(roleID);
-                
-                
+
                 user = new User(userEmail, fname, lname, password, role);
                 user.setActive(active);
-            }
+              }
 
             return user;
-        } finally {
+          } finally
+          {
             connectionPool.freeConnection(connection);
-        }
-    }
+          }
+      }
 
     /**
      * This method physically deletes a user from the user_table
@@ -209,10 +226,12 @@ public class UserDB {
      * @return false returns false if there's nothing to de
      * @throws java.sql.SQLException
      */
-    public boolean delete(User user) throws SQLException {
+    public boolean delete(User user) throws SQLException
+      {
         ConnectionPool connectionPool = null;
         Connection connection = null;
-        try {
+        try
+          {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
 
@@ -224,9 +243,10 @@ public class UserDB {
             prepare.close();
             return rowCount == 1;
 
-        } finally {
+          } finally
+          {
             connectionPool.freeConnection(connection);
-        }
-    }
-    
-}
+          }
+      }
+
+  }
