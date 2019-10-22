@@ -66,7 +66,7 @@ public class UserDB
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
 
-            String preparedQuery = "UPDATE User_Table set active=?, fname=?, lname=?, password=? where email=?";
+            String preparedQuery = "UPDATE User_Table set active=?, fname=?, lname=?, password=?, role =? where email=?";
             int successCount = 0;
 
             PreparedStatement statement = connection.prepareStatement(preparedQuery);
@@ -74,7 +74,8 @@ public class UserDB
             statement.setString(2, user.getFname());
             statement.setString(3, user.getLname());
             statement.setString(4, user.getPassword());
-            statement.setString(5, user.getEmail());
+            statement.setInt(5, user.getRole().getRoleID());
+            statement.setString(6, user.getEmail());
 
             successCount = statement.executeUpdate();
             statement.close();
