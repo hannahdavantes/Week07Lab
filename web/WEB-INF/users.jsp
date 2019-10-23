@@ -65,9 +65,9 @@
                         class="input-dark"
                         name="roleid"
                         >
-                        <option value="1">System Admin</option>
-                        <option value="2">Regular User</option>
-                        <option value="3">Company Admin</option>
+                        <c:forEach items="${roles}" var="role">
+                        <option value="${role.roleID}">${role.roleName}</option>
+                        </c:forEach>
                     </select>
 
                     <input type="hidden" name="action" value="add" />
@@ -156,24 +156,14 @@
                             class="input-dark"
                             name="roleid"
                             >
-                            <c:if test="${user.role.roleID eq 1}">
-                                <option value="1" selected>System admin</option>
+                           <c:forEach items="${roles}" var="role"> 
+                            <c:if test="${user.role.roleID eq role.roleID}">
+                                <option value="${role.roleID}" selected>${role.roleName}</option>
                             </c:if>  
-                            <c:if test="${user.role.roleID ne 1}">
-                                <<option value="1">System admin</option>
-                            </c:if>
-                            <c:if test="${user.role.roleID eq 2}">
-                                <option value="1" selected>Regular User</option>
-                            </c:if>  
-                            <c:if test="${user.role.roleID ne 2}">
-                                <<option value="2">Regular User</option>
-                            </c:if>
-                            <c:if test="${user.role.roleID eq 3}">
-                                <<option value="2" selected>Company Admin</option>
-                            </c:if>
-                            <c:if test="${user.role.roleID ne 3}">
-                                <<option value="2">Company Admin</option>
-                            </c:if>
+                             <c:if test="${user.role.roleID ne role.roleID}">
+                                <option value=${role.roleID}>${role.roleName}</option>
+                            </c:if>      
+                           </c:forEach>
                         </select>
                         <input type="hidden" name="action" value="edit" />
                         <input class="mb-0 input-primary" type="submit" value="Save"/>

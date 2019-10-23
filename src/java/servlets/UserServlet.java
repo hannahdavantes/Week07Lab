@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.User;
+import services.RoleService;
 import services.UserService;
 
 public class UserServlet extends HttpServlet {
@@ -23,7 +24,7 @@ public class UserServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     UserService us = new UserService();
-
+    RoleService rs = new RoleService();
     String email = request.getParameter("email");
 
     String action = request.getParameter("action");
@@ -66,6 +67,7 @@ public class UserServlet extends HttpServlet {
 
     try {
       request.setAttribute("users", us.getAll());
+      request.setAttribute("roles", rs.getAll());
     } catch (Exception e) {
       request.setAttribute("error", e.getMessage());
     }
@@ -85,6 +87,7 @@ public class UserServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     UserService us = new UserService();
+    RoleService rs = new RoleService();
 
     String email = request.getParameter("email");
     String fname = request.getParameter("fname");
@@ -118,6 +121,7 @@ public class UserServlet extends HttpServlet {
 
     try {
       request.setAttribute("users", us.getAll());
+      request.setAttribute("roles", rs.getAll());
     } catch (Exception ex) {
       request.setAttribute("error", ex.getMessage());
     }
